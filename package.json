@@ -1,0 +1,11 @@
+{
+  "name": "com.ooju.xrsetup",
+  "version": "0.1.0",
+  "displayName": "OOJU Unity XR Setup",
+  "description": "OOJU XR Setup tools for Unity Editor.",
+  "unity": "2021.3",
+  "author": {
+    "name": "OOJU",
+    "url": "https://github.com/Unewverse/ooju-unity-xr.git"
+  }
+}

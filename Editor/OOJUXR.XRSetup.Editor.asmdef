@@ -1,7 +1,9 @@
 {
   "name": "OOJUXR.XRSetup.Editor",
   "references": [
-    "OOJUXR.XRSetup.Runtime"
+    "OOJUXR.XRSetup.Runtime",
+    "Unity.XR.CoreUtils",
+    "Unity.XR.Interaction.Toolkit"
   ],
   "includePlatforms": ["Editor"]
 } 

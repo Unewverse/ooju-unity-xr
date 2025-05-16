@@ -1,3 +1,7 @@
 {
-  "name": "OOJUXR.XRSetup.Runtime"
+  "name": "OOJUXR.XRSetup.Runtime",
+  "references": [
+    "Unity.XR.CoreUtils",
+    "Unity.XR.Interaction.Toolkit"
+  ]
 } 

@@ -229,22 +229,28 @@ namespace OojuXRPlugin
                     break;
             }
             
-            string matPath = "Assets/OOJUXR/ooju-unity-xr/Skybox/" + matName;
-            string texturePath = "Assets/OOJUXR/ooju-unity-xr/Skybox/" + textureName;
-            
-            Material skyboxMat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
-            
+            string assetsMatPath = "Assets/OOJUXR/ooju-unity-xr/Skybox/" + matName;
+            string packagesMatPath = "Packages/com.ooju.xrsetup/Skybox/" + matName;
+            string assetsTexturePath = "Assets/OOJUXR/ooju-unity-xr/Skybox/" + textureName;
+            string packagesTexturePath = "Packages/com.ooju.xrsetup/Skybox/" + textureName;
+
+            Material skyboxMat = AssetDatabase.LoadAssetAtPath<Material>(assetsMatPath);
+            if (skyboxMat == null)
+                skyboxMat = AssetDatabase.LoadAssetAtPath<Material>(packagesMatPath);
+
             if (skyboxMat == null)
             {
                 // Create material if it doesn't exist
-                Texture2D hdriTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
+                Texture2D hdriTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(assetsTexturePath);
+                if (hdriTexture == null)
+                    hdriTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(packagesTexturePath);
                 if (hdriTexture != null)
                 {
-                    skyboxMat = CreateSkyboxMaterial(hdriTexture, matPath);
+                    skyboxMat = CreateSkyboxMaterial(hdriTexture, assetsMatPath);
                 }
                 else
                 {
-                    EditorUtility.DisplayDialog("Error", $"HDRi texture not found: {texturePath}", "OK");
+                    EditorUtility.DisplayDialog("Error", $"HDRi texture not found: {assetsTexturePath} or {packagesTexturePath}", "OK");
                     return;
                 }
             }

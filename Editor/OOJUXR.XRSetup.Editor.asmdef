@@ -1,0 +1,7 @@
+{
+  "name": "OOJUXR.XRSetup.Editor",
+  "references": [
+    "OOJUXR.XRSetup.Runtime"
+  ],
+  "includePlatforms": ["Editor"]
+} 

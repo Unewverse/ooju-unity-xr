@@ -46,12 +46,12 @@ namespace OojuXRPlugin
             
             EditorGUILayout.LabelField("Scene Setup", EditorStyles.boldLabel);
             GUILayout.Space(5);
-            EditorGUILayout.LabelField("Create a new XR scene with basic setup", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField("Add XR camera rig and hand tracking prefab to the current scene", EditorStyles.miniLabel);
             GUILayout.Space(10);
             
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("Set XR-Ready Scene", "Setup basic XR components in current scene"), 
+            if (GUILayout.Button(new GUIContent("Add XR Camera & Hand Tracking", "Add XR camera rig and hand tracking prefab to the current scene"), 
                 GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
                 XRSceneSetup.SetupXRScene();

@@ -72,6 +72,51 @@ namespace OojuXRPlugin
             GUILayout.Space(10);
             EditorGUILayout.EndVertical();
             
+            // XR Features Section - Temporarily commented out for PR
+            // This section will be re-enabled after the PR is merged
+            /*
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.Space(10);
+            EditorGUILayout.LabelField("XR Features", EditorStyles.boldLabel);
+            GUILayout.Space(5);
+            EditorGUILayout.LabelField("Add common XR interaction features to your scene", EditorStyles.miniLabel);
+            GUILayout.Space(10);
+
+            // Add Teleport button
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Add Teleport", "Add teleportation feature to the scene"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                EditorUtility.DisplayDialog("Not Implemented", "Teleport feature will be implemented in a future update.", "OK");
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            // Add Grab Interaction button
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Add Grab Interaction", "Add grab interaction feature to the scene"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                EditorUtility.DisplayDialog("Not Implemented", "Grab interaction feature will be implemented in a future update.", "OK");
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            // Add Ray Interaction button
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Add Ray Interaction", "Add ray interaction feature to the scene"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                EditorUtility.DisplayDialog("Not Implemented", "Ray interaction feature will be implemented in a future update.", "OK");
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(10);
+            EditorGUILayout.EndVertical();
+            */
+
             GUILayout.Space(20);
 
             // Skybox Setup Section

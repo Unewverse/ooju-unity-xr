@@ -46,15 +46,25 @@ namespace OojuXRPlugin
             
             EditorGUILayout.LabelField("Scene Setup", EditorStyles.boldLabel);
             GUILayout.Space(5);
-            EditorGUILayout.LabelField("Create a new XR scene with basic setup", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField("Quickly set up your scene for VR or Mixed Reality (MR) with camera and hand tracking.", EditorStyles.miniLabel);
             GUILayout.Space(10);
             
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("Set XR-Ready Scene", "Setup basic XR components in current scene"), 
+            if (GUILayout.Button(new GUIContent("Set VR Scene", "Set up a VR scene with camera and hand tracking prefabs"), 
                 GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
                 XRSceneSetup.SetupXRScene();
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Set MR Scene", "Set up a Mixed Reality scene with passthrough and real hands prefabs"),
+                GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                XRSceneSetup.SetupPassthroughAndRealHands();
             }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
@@ -62,6 +72,51 @@ namespace OojuXRPlugin
             GUILayout.Space(10);
             EditorGUILayout.EndVertical();
             
+            // XR Features Section - Temporarily commented out for PR
+            // This section will be re-enabled after the PR is merged
+            /*
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.Space(10);
+            EditorGUILayout.LabelField("XR Features", EditorStyles.boldLabel);
+            GUILayout.Space(5);
+            EditorGUILayout.LabelField("Add common XR interaction features to your scene", EditorStyles.miniLabel);
+            GUILayout.Space(10);
+
+            // Add Teleport button
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Add Teleport", "Add teleportation feature to the scene"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                EditorUtility.DisplayDialog("Not Implemented", "Teleport feature will be implemented in a future update.", "OK");
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            // Add Grab Interaction button
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Add Grab Interaction", "Add grab interaction feature to the scene"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                EditorUtility.DisplayDialog("Not Implemented", "Grab interaction feature will be implemented in a future update.", "OK");
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            // Add Ray Interaction button
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Add Ray Interaction", "Add ray interaction feature to the scene"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                EditorUtility.DisplayDialog("Not Implemented", "Ray interaction feature will be implemented in a future update.", "OK");
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(10);
+            EditorGUILayout.EndVertical();
+            */
+
             GUILayout.Space(20);
 
             // Skybox Setup Section
@@ -170,31 +225,6 @@ namespace OojuXRPlugin
                 GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
                 SetSelectedAsGround();
-            }
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
-            
-            GUILayout.Space(10);
-            EditorGUILayout.EndVertical();
-            
-            GUILayout.Space(20);
-            
-            // Hand Tracking Section
-            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            GUILayout.Space(10);
-            
-            EditorGUILayout.LabelField("Hand Tracking", EditorStyles.boldLabel);
-            GUILayout.Space(5);
-            EditorGUILayout.LabelField("Add hand gesture recognition to your scene", EditorStyles.miniLabel);
-            GUILayout.Space(10);
-            
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("Add Hand Gestures", "Add hand gesture recognition components"), 
-                GUILayout.Width(buttonWidth), GUILayout.Height(30)))
-            {
-                EditorUtility.DisplayDialog("Not Implemented", 
-                    "Hand gesture setup will be implemented in a future update.", "OK");
             }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();

@@ -9,6 +9,18 @@
     "url": "https://github.com/Unewverse/ooju-unity-xr.git"
   },
   "dependencies": {
-    "com.unity.xr.interaction.toolkit": "2.4.3"
-  }
+    "com.unity.xr.interaction.toolkit": "2.4.3",
+    "com.meta.xr.sdk": "57.0.0",
+    "com.unity.xr.management": "4.2.1",
+    "com.unity.xr.openxr": "1.7.0"
+  },
+  "scopedRegistries": [
+    {
+      "name": "Meta XR SDK",
+      "url": "https://npm.pkg.github.com/@meta",
+      "scopes": [
+        "com.meta.xr"
+      ]
+    }
+  ]
 }

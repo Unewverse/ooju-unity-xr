@@ -384,7 +384,7 @@ namespace OojuXRPlugin
             // Check and install XR Plugin Management
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("Check XR Plugin Management", "Check and install XR Plugin Management package"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            if (GUILayout.Button(new GUIContent("Check XR Dependencies", "Check and install XR Plugin Management package"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
                 CheckAndInstallXRPluginManagement();
             }
@@ -392,45 +392,23 @@ namespace OojuXRPlugin
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(5);
 
-            // Switch build target to Android
+            // Switch build target to Android & Set Android API Level (merged)
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("Switch to Android Build Target", "Switch build target to Android"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            if (GUILayout.Button(new GUIContent("Set Build Settings for XR", "Switch build target to Android and set API Level 32 (12L)"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
-                SwitchToAndroidBuildTarget();
+                SwitchToAndroidBuildTargetAndSetApiLevel();
             }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(5);
 
-            // Set Android API Level
+            // Guide for enabling OpenXR and Project Validation (merged)
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("Set Android API Level 32 (12L)", "Set Android min/target API Level to 32 (12L)"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            if (GUILayout.Button(new GUIContent("Guide for XR Setup", "Show instructions for OpenXR and Project Validation"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
-                SetAndroidApiLevel();
-            }
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
-            GUILayout.Space(5);
-
-            // Guide for enabling OpenXR
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("Guide: Enable OpenXR", "Show instructions to enable OpenXR for Windows and Android"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
-            {
-                ShowOpenXRGuide();
-            }
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
-            GUILayout.Space(5);
-
-            // Guide for Project Validation
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("Guide: Project Validation", "Show instructions to fix all XR project validation issues"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
-            {
-                ShowProjectValidationGuide();
+                ShowXRSetupGuide();
             }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
@@ -458,9 +436,10 @@ namespace OojuXRPlugin
             }
         }
 
-        // Switch build target to Android
-        private void SwitchToAndroidBuildTarget()
+        // Switch build target to Android and set API Level to 32 (Android 12L)
+        private void SwitchToAndroidBuildTargetAndSetApiLevel()
         {
+            // Switch build target to Android
             if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
@@ -470,35 +449,22 @@ namespace OojuXRPlugin
             {
                 EditorUtility.DisplayDialog("Build Target", "Build target is already Android.", "OK");
             }
-        }
 
-        // Set Android API Level to 32 (Android 12L)
-        private void SetAndroidApiLevel()
-        {
+            // Set Android API Level to 32 (Android 12L)
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel32;
             PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel32;
             EditorUtility.DisplayDialog("API Level Set", "Android min/target API Level set to 32 (Android 12L).", "OK");
         }
 
-        // Show guide for enabling OpenXR
-        private void ShowOpenXRGuide()
+        // Show guide for enabling OpenXR and Project Validation (merged)
+        private void ShowXRSetupGuide()
         {
             EditorUtility.DisplayDialog(
-                "Enable OpenXR",
+                "XR Setup Guide",
                 "1. Go to Project Settings > XR Plug-in Management.\n" +
                 "2. In both Windows and Android tabs, check 'OpenXR'.\n" +
-                "3. If prompted for 'Interaction SDK OpenXR Hand Skeleton Upgrade', select 'Use OpenXR Hand (New Projects)'.\n",
-                "OK");
-        }
-
-        // Show guide for Project Validation
-        private void ShowProjectValidationGuide()
-        {
-            EditorUtility.DisplayDialog(
-                "Project Validation",
-                "1. Go to Project Settings > XR Plug-in Management.\n" +
-                "2. Click the 'Project Validation' tab.\n" +
-                "3. Click 'Fix All' to resolve all issues.\n",
+                "3. In OpenXR settings, under 'Enabled Interaction Profiles', add the profiles that match your target device (e.g., Oculus Touch Controller Profile, HP Reverb G2 Controller Profile, etc.).\n" +
+                "4. Go to the 'Project Validation' tab and click 'Fix All' to resolve all issues.",
                 "OK");
         }
     }

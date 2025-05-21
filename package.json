@@ -9,10 +9,10 @@
     "url": "https://github.com/Unewverse/ooju-unity-xr.git"
   },
   "dependencies": {
-    "com.unity.xr.interaction.toolkit": "^2.4.3",
-    "com.meta.xr.sdk.all": "^76.0.1",
-    "com.unity.xr.management": "^4.2.1",
-    "com.unity.xr.openxr": "^1.7.0"
+    "com.unity.xr.interaction.toolkit": "2.4.3",
+    "com.meta.xr.sdk.all": "76.0.1",
+    "com.unity.xr.management": "4.2.1",
+    "com.unity.xr.openxr": "1.7.0"
   },
   "scopedRegistries": [
     {

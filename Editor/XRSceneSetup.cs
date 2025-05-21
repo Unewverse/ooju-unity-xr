@@ -13,7 +13,8 @@ namespace OojuXRPlugin
             Scene currentScene = SceneManager.GetActiveScene();
 
             // Remove all existing cameras in the scene
-            Camera[] cameras = Object.FindObjectsOfType<Camera>();
+            // Changed to FindObjectsByType for better performance and to avoid deprecation warning
+            Camera[] cameras = Object.FindObjectsByType<Camera>(FindObjectsSortMode.None);
             foreach (Camera cam in cameras)
             {
                 Object.DestroyImmediate(cam.gameObject);
@@ -52,7 +53,8 @@ namespace OojuXRPlugin
             Scene currentScene = SceneManager.GetActiveScene();
 
             // Remove all existing cameras in the scene
-            Camera[] cameras = Object.FindObjectsOfType<Camera>();
+            // Changed to FindObjectsByType for better performance and to avoid deprecation warning
+            Camera[] cameras = Object.FindObjectsByType<Camera>(FindObjectsSortMode.None);
             foreach (Camera cam in cameras)
             {
                 Object.DestroyImmediate(cam.gameObject);

@@ -2,6 +2,8 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using OojuXRPlugin;
+using System.Linq;
+using System;
 
 namespace OojuXRPlugin
 {
@@ -40,6 +42,9 @@ namespace OojuXRPlugin
             EditorGUILayout.BeginVertical();
             GUILayout.Space(20);
 
+            // Add project setup section at the top
+            DrawXRProjectSetupSection(buttonWidth);
+
             // Scene Setup Section
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             GUILayout.Space(10);
@@ -72,14 +77,14 @@ namespace OojuXRPlugin
             GUILayout.Space(10);
             EditorGUILayout.EndVertical();
             
-            // XR Features Section - Temporarily commented out for PR
-            // This section will be re-enabled after the PR is merged
+            // XR Features Section
             /*
+            // [To be developed soon]
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             GUILayout.Space(10);
             EditorGUILayout.LabelField("XR Features", EditorStyles.boldLabel);
             GUILayout.Space(5);
-            EditorGUILayout.LabelField("Add common XR interaction features to your scene", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField("This feature will be developed soon.", EditorStyles.miniLabel);
             GUILayout.Space(10);
 
             // Add Teleport button
@@ -87,7 +92,7 @@ namespace OojuXRPlugin
             GUILayout.FlexibleSpace();
             if (GUILayout.Button(new GUIContent("Add Teleport", "Add teleportation feature to the scene"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
-                EditorUtility.DisplayDialog("Not Implemented", "Teleport feature will be implemented in a future update.", "OK");
+                // To be developed soon
             }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
@@ -98,7 +103,7 @@ namespace OojuXRPlugin
             GUILayout.FlexibleSpace();
             if (GUILayout.Button(new GUIContent("Add Grab Interaction", "Add grab interaction feature to the scene"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
-                EditorUtility.DisplayDialog("Not Implemented", "Grab interaction feature will be implemented in a future update.", "OK");
+                // To be developed soon
             }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
@@ -109,15 +114,13 @@ namespace OojuXRPlugin
             GUILayout.FlexibleSpace();
             if (GUILayout.Button(new GUIContent("Add Ray Interaction", "Add ray interaction feature to the scene"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
-                EditorUtility.DisplayDialog("Not Implemented", "Ray interaction feature will be implemented in a future update.", "OK");
+                // To be developed soon
             }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(10);
             EditorGUILayout.EndVertical();
             */
-
-            GUILayout.Space(20);
 
             // Skybox Setup Section
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
@@ -199,97 +202,103 @@ namespace OojuXRPlugin
             GUILayout.Space(20);
             
             // Ground Setup Section
+            /*
+            // [To be developed soon]
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             GUILayout.Space(10);
-            
             EditorGUILayout.LabelField("Ground Setup", EditorStyles.boldLabel);
             GUILayout.Space(5);
-            EditorGUILayout.LabelField("Set up ground for XR interactions and animations", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField("This feature will be developed soon.", EditorStyles.miniLabel);
             GUILayout.Space(10);
-            
+
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             if (GUILayout.Button(new GUIContent("Create Ground Plane", "Create a new plane as ground"), 
                 GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
-                CreateGroundPlane();
+                // To be developed soon
             }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
-            
             GUILayout.Space(10);
-            
+
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             if (GUILayout.Button(new GUIContent("Set Selected as Ground", "Set selected object as ground"), 
                 GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
-                SetSelectedAsGround();
+                // To be developed soon
             }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
-            
             GUILayout.Space(10);
             EditorGUILayout.EndVertical();
+            */
             
             EditorGUILayout.EndVertical();
         }
 
         private void SetSkyboxByType(string type)
         {
-            string matName = "";
-            string textureName = "";
-            switch (type)
-            {
-                case "Indoor":
-                    matName = "Skybox_Indoor.mat";
-                    textureName = "Indoor.exr";
-                    break;
-                case "Outdoor":
-                    matName = "Skybox_Outdoor.mat";
-                    textureName = "Outdoor.exr";
-                    break;
-                case "Sky":
-                    matName = "Skybox_Sky.mat";
-                    textureName = "Sky.exr";
-                    break;
-                case "City":
-                    matName = "Skybox_City.mat";
-                    textureName = "City.exr";
-                    break;
-            }
-            
-            string assetsMatPath = "Assets/OOJUXR/ooju-unity-xr/Skybox/" + matName;
-            string packagesMatPath = "Packages/com.ooju.xrsetup/Skybox/" + matName;
-            string assetsTexturePath = "Assets/OOJUXR/ooju-unity-xr/Skybox/" + textureName;
-            string packagesTexturePath = "Packages/com.ooju.xrsetup/Skybox/" + textureName;
+            // Always use Assets/OOJU/XR/Skybox/ for skybox assets
+            string assetsSkyboxDir = "Assets/OOJU/XR/Skybox/";
+            string matName = $"Skybox_{type}.mat";
+            string textureName = $"{type}.exr";
+            string packagesTexturePath = $"Packages/com.ooju.xrsetup/Skybox/{textureName}";
+            string assetsTexturePath = assetsSkyboxDir + textureName;
+            string assetsMatPath = assetsSkyboxDir + matName;
 
+            // Ensure the directory exists
+            if (!System.IO.Directory.Exists(assetsSkyboxDir))
+                System.IO.Directory.CreateDirectory(assetsSkyboxDir);
+
+            // Always copy the texture from the package to Assets (overwrite every time)
+            if (System.IO.File.Exists(packagesTexturePath))
+            {
+                System.IO.File.Copy(packagesTexturePath, assetsTexturePath, true);
+                AssetDatabase.ImportAsset(assetsTexturePath);
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("Error", $"HDRi texture not found in package: {packagesTexturePath}", "OK");
+                return;
+            }
+
+            AssetDatabase.Refresh();
+
+            // Load the HDRI texture
+            Texture2D hdriTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(assetsTexturePath);
+            if (hdriTexture == null)
+            {
+                EditorUtility.DisplayDialog("Error", $"HDRi texture not found: {assetsTexturePath}", "OK");
+                return;
+            }
+
+            // Create or update the skybox material
             Material skyboxMat = AssetDatabase.LoadAssetAtPath<Material>(assetsMatPath);
             if (skyboxMat == null)
-                skyboxMat = AssetDatabase.LoadAssetAtPath<Material>(packagesMatPath);
-
-            if (skyboxMat == null)
             {
-                // Create material if it doesn't exist
-                Texture2D hdriTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(assetsTexturePath);
-                if (hdriTexture == null)
-                    hdriTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(packagesTexturePath);
-                if (hdriTexture != null)
-                {
-                    skyboxMat = CreateSkyboxMaterial(hdriTexture, assetsMatPath);
-                }
-                else
-                {
-                    EditorUtility.DisplayDialog("Error", $"HDRi texture not found: {assetsTexturePath} or {packagesTexturePath}", "OK");
-                    return;
-                }
+                // Create a new material with Skybox/Panoramic shader
+                skyboxMat = new Material(Shader.Find("Skybox/Panoramic"));
+                skyboxMat.SetTexture("_MainTex", hdriTexture);
+                skyboxMat.SetFloat("_Exposure", 1.0f);
+                skyboxMat.SetFloat("_Rotation", 0f);
+                skyboxMat.SetInt("_Mapping", 1); // LatLong mapping
+                AssetDatabase.CreateAsset(skyboxMat, assetsMatPath);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
+            else
+            {
+                // Update the texture if the material already exists
+                skyboxMat.SetTexture("_MainTex", hdriTexture);
+                EditorUtility.SetDirty(skyboxMat);
+                AssetDatabase.SaveAssets();
             }
 
-            if (skyboxMat != null)
-            {
-                RenderSettings.skybox = skyboxMat;
-                EditorUtility.DisplayDialog("Skybox Changed", $"{type} skybox has been applied.", "OK");
-            }
+            // Apply the skybox material to the scene
+            RenderSettings.skybox = skyboxMat;
+            EditorUtility.DisplayDialog("Skybox Changed", $"{type} skybox has been applied.", "OK");
         }
 
         private Material CreateSkyboxMaterial(Texture2D hdriTexture, string savePath)
@@ -362,77 +371,135 @@ namespace OojuXRPlugin
             }
         }
 
-        private void CreateGroundPlane()
+        // Project setup and validation section
+        private void DrawXRProjectSetupSection(float buttonWidth)
         {
-            // Create a new plane
-            GameObject groundPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            groundPlane.name = "Ground";
-            
-            // Add necessary components
-            var collider = groundPlane.GetComponent<Collider>();
-            if (collider == null)
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.Space(10);
+            EditorGUILayout.LabelField("Project Setup", EditorStyles.boldLabel);
+            GUILayout.Space(5);
+            EditorGUILayout.LabelField("Configure your project for XR development", EditorStyles.miniLabel);
+            GUILayout.Space(10);
+
+            // Check and install XR Plugin Management
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Check XR Plugin Management", "Check and install XR Plugin Management package"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
             {
-                groundPlane.AddComponent<BoxCollider>();
+                CheckAndInstallXRPluginManagement();
             }
-            
-            // Add Ground component
-            var ground = groundPlane.AddComponent<Ground>();
-            
-            // Position the plane
-            groundPlane.transform.position = Vector3.zero;
-            groundPlane.transform.rotation = Quaternion.identity;
-            
-            // Select the created plane
-            Selection.activeGameObject = groundPlane;
-            
-            EditorUtility.DisplayDialog("Success", "Ground plane has been created successfully!", "OK");
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            // Switch build target to Android
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Switch to Android Build Target", "Switch build target to Android"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                SwitchToAndroidBuildTarget();
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            // Set Android API Level
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Set Android API Level 32 (12L)", "Set Android min/target API Level to 32 (12L)"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                SetAndroidApiLevel();
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            // Guide for enabling OpenXR
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Guide: Enable OpenXR", "Show instructions to enable OpenXR for Windows and Android"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                ShowOpenXRGuide();
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            // Guide for Project Validation
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("Guide: Project Validation", "Show instructions to fix all XR project validation issues"), GUILayout.Width(buttonWidth), GUILayout.Height(30)))
+            {
+                ShowProjectValidationGuide();
+            }
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(10);
+            EditorGUILayout.EndVertical();
         }
 
-        private void SetSelectedAsGround()
+        // Check and install XR Plugin Management package
+        private void CheckAndInstallXRPluginManagement()
         {
-            var selectedObject = Selection.activeGameObject;
-            if (selectedObject == null)
+            var listRequest = UnityEditor.PackageManager.Client.List(true, false);
+            while (!listRequest.IsCompleted) { }
+            bool installed = listRequest.Result.Any(p => p.name == "com.unity.xr.management");
+            if (installed)
             {
-                EditorUtility.DisplayDialog("Error", "Please select an object first.", "OK");
-                return;
-            }
-
-            // Add Ground component if not exists
-            var ground = selectedObject.GetComponent<Ground>();
-            if (ground == null)
-            {
-                ground = selectedObject.AddComponent<Ground>();
-            }
-
-            // Collider handling
-            var meshFilter = selectedObject.GetComponent<MeshFilter>();
-            if (meshFilter != null && meshFilter.sharedMesh != null)
-            {
-                // Remove existing BoxCollider if present
-                var boxCollider = selectedObject.GetComponent<BoxCollider>();
-                if (boxCollider != null)
-                {
-                    DestroyImmediate(boxCollider);
-                }
-                // Add MeshCollider if not present
-                var meshCollider = selectedObject.GetComponent<MeshCollider>();
-                if (meshCollider == null)
-                {
-                    meshCollider = selectedObject.AddComponent<MeshCollider>();
-                }
-                meshCollider.sharedMesh = meshFilter.sharedMesh;
-                meshCollider.convex = false; // Ground should not be convex
+                EditorUtility.DisplayDialog("XR Plugin Management", "XR Plugin Management package is already installed.", "OK");
             }
             else
             {
-                // Keep BoxCollider if there is no mesh
-                if (selectedObject.GetComponent<Collider>() == null)
+                if (EditorUtility.DisplayDialog("XR Plugin Management Required", "XR Plugin Management package is not installed. Would you like to install it now?", "Install", "Cancel"))
                 {
-                    selectedObject.AddComponent<BoxCollider>();
+                    UnityEditor.PackageManager.Client.Add("com.unity.xr.management");
+                    EditorUtility.DisplayDialog("XR Plugin Management", "Installation started. Please check the Package Manager window.", "OK");
                 }
             }
+        }
 
-            EditorUtility.DisplayDialog("Success", "Selected object has been set as ground!", "OK");
+        // Switch build target to Android
+        private void SwitchToAndroidBuildTarget()
+        {
+            if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
+                EditorUtility.DisplayDialog("Build Target Switched", "Build target switched to Android.", "OK");
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("Build Target", "Build target is already Android.", "OK");
+            }
+        }
+
+        // Set Android API Level to 32 (Android 12L)
+        private void SetAndroidApiLevel()
+        {
+            PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel32;
+            PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel32;
+            EditorUtility.DisplayDialog("API Level Set", "Android min/target API Level set to 32 (Android 12L).", "OK");
+        }
+
+        // Show guide for enabling OpenXR
+        private void ShowOpenXRGuide()
+        {
+            EditorUtility.DisplayDialog(
+                "Enable OpenXR",
+                "1. Go to Project Settings > XR Plug-in Management.\n" +
+                "2. In both Windows and Android tabs, check 'OpenXR'.\n" +
+                "3. If prompted for 'Interaction SDK OpenXR Hand Skeleton Upgrade', select 'Use OpenXR Hand (New Projects)'.\n",
+                "OK");
+        }
+
+        // Show guide for Project Validation
+        private void ShowProjectValidationGuide()
+        {
+            EditorUtility.DisplayDialog(
+                "Project Validation",
+                "1. Go to Project Settings > XR Plug-in Management.\n" +
+                "2. Click the 'Project Validation' tab.\n" +
+                "3. Click 'Fix All' to resolve all issues.\n",
+                "OK");
         }
     }
 } 
